@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The -ino Collective v3.0 - Revolutionary AI Team Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #1a1a1d;
+            --bg-tertiary: #2a2a2f;
+            --border-color: #3a3a3f;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b5;
+            --text-muted: #75757d;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --accent-purple: #8b5cf6;
+            --accent-orange: #f59e0b;
+            --quantum-glow: #00ffff;
+            --neural-pulse: #ff00ff;
+            --consciousness-flow: #ffff00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Cosmic background animation */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(ellipse at center, #1a0033 0%, #000000 100%);
+            opacity: 0.8;
+        }
+
+        .cosmic-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: stars 20s linear infinite;
+        }
+
+        @keyframes stars {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-60px); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(26, 26, 29, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            animation: quantum-scan 3s ease-in-out infinite;
+        }
+
+        @keyframes quantum-scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+
+        .title-section h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--quantum-glow), var(--neural-pulse), var(--consciousness-flow));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            animation: quantum-pulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes quantum-pulse {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .quantum-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--quantum-glow);
+            border-radius: 50%;
+            margin: 0 8px;
+            animation: quantum-blink 1s ease-in-out infinite;
+        }
+
+        @keyframes quantum-blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            background: rgba(42, 42, 47, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 16px 12px 40px;
+            color: var(--text-primary);
+            width: 280px;
+            font-size: 0.9rem;
+        }
+
+        .time-controls {
+            display: flex;
+            background: rgba(42, 42, 47, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 4px;
+        }
+
+        .time-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .time-btn.active {
+            background: var(--accent-purple);
+            color: white;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .status-indicators {
+            display: flex;
+            gap: 16px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(42, 42, 47, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .status-indicator:hover {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--accent-purple);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            animation: status-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes status-pulse {
+            0%, 100% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.8), 0 0 30px rgba(16, 185, 129, 0.4); }
+        }
+
+        /* Main Grid - THIS IS THE CRITICAL FIX */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+            opacity: 1 !important;
+            visibility: visible !important;
+            position: relative;
+            z-index: 2;
+        }
+
+        .metric-card {
+            background: rgba(26, 26, 29, 0.9);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            min-height: 180px;
+            display: flex !important;
+            flex-direction: column;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .metric-card:hover::before {
+            opacity: 1;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(139, 92, 246, 0.2);
+            border-color: var(--accent-purple);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-title .emoji {
+            font-size: 1.2rem;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .metric-change {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .change-positive {
+            color: var(--accent-green);
+        }
+
+        .change-indicator {
+            font-weight: 600;
+        }
+
+        .metric-breakdown {
+            margin-top: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(42, 42, 47, 0.6);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            min-width: 120px;
+        }
+
+        /* Intelligence Panel */
+        .intelligence-panel {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .insights-section, .activity-section {
+            background: rgba(26, 26, 29, 0.9);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .insight-card {
+            background: rgba(42, 42, 47, 0.6);
+            border: 1px solid rgba(58, 58, 63, 0.5);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .insight-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .insight-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .activity-stream {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(58, 58, 63, 0.3);
+        }
+
+        .activity-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--quantum-glow);
+            margin-top: 8px;
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .activity-description {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+
+        .activity-time {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        /* Bottom status */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(26, 26, 29, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px 24px;
+            backdrop-filter: blur(20px);
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+        }
+
+        .quantum-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid var(--quantum-glow);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: var(--quantum-glow);
+            font-size: 0.9rem;
+            z-index: 1000;
+            animation: notification-slide-in 0.5s ease-out;
+            opacity: 0;
+        }
+
+        @keyframes notification-slide-in {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .intelligence-panel {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Progress bars and visualizations */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(42, 42, 47, 0.8);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .neural-load-70 {
+            width: 70%;
+        }
+
+        .agent-intelligence-96 {
+            width: 96%;
+            background: linear-gradient(90deg, var(--accent-green), var(--quantum-glow));
+        }
+    </style>
+</head>
+<body>
+    <div class="cosmic-bg"></div>
+    
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="title-section">
+                    <h1>The -ino Collective v3.0</h1>
+                    <p class="subtitle">Revolutionary autonomous agent monitoring<span class="quantum-indicator"></span>Quantum stream active (<span id="uptime">4s</span>)</p>
+                </div>
+                <div class="header-controls">
+                    <div class="search-box">
+                        <input type="text" placeholder="Neural search across all metrics...">
+                    </div>
+                    <div class="time-controls">
+                        <button class="time-btn active">24h</button>
+                        <button class="time-btn">7d</button>
+                        <button class="time-btn">30d</button>
+                        <button class="time-btn">90d</button>
+                    </div>
+                    <div class="status-indicators">
+                        <div class="status-indicator">
+                            <div class="status-dot"></div>
+                            <span>9 -ino Agents Active</span>
+                        </div>
+                        <div class="status-indicator">
+                            <div class="status-dot"></div>
+                            <span>425 Sessions</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Metrics Grid -->
+        <div class="metrics-grid">
+            <!-- Total Sessions Card -->
+            <div class="metric-card" id="sessions-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="emoji">📊</span>
+                        <span>Total Sessions</span>
+                    </div>
+                </div>
+                <div class="metric-value">425</div>
+                <div class="metric-change">
+                    <span class="change-indicator change-positive">+28% quantum boost</span>
+                </div>
+            </div>
+
+            <!-- Neural Processing Card -->
+            <div class="metric-card" id="neural-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="emoji">⚡</span>
+                        <span>Neural Processing</span>
+                    </div>
+                </div>
+                <div class="metric-value">70%</div>
+                <div class="progress-bar">
+                    <div class="progress-fill neural-load-70"></div>
+                </div>
+                <div class="metric-change">
+                    <span>16.8M/24M Tokens</span>
+                    <span class="change-indicator" style="color: var(--accent-orange);">High cognitive load</span>
+                </div>
+            </div>
+
+            <!-- Project Ecosystem Card -->
+            <div class="metric-card" id="projects-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="emoji">🚀</span>
+                        <span>Project Ecosystem</span>
+                    </div>
+                </div>
+                <div class="metric-value">9</div>
+                <div class="metric-change">
+                    <span>5 delivered this cycle</span>
+                </div>
+                <div class="metric-breakdown">
+                    <div class="breakdown-item">
+                        <span>Active</span>
+                        <span>4</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Review</span>
+                        <span>3</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Planning</span>
+                        <span>2</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent Intelligence Card -->
+            <div class="metric-card" id="intelligence-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="emoji">🤖</span>
+                        <span>Agent Intelligence</span>
+                    </div>
+                </div>
+                <div class="metric-value">96%</div>
+                <div class="progress-bar">
+                    <div class="progress-fill agent-intelligence-96"></div>
+                </div>
+                <div class="metric-change">
+                    <span class="change-indicator change-positive">+8% neural efficiency</span>
+                </div>
+            </div>
+
+            <!-- Revenue Quantum Card -->
+            <div class="metric-card" id="revenue-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="emoji">💎</span>
+                        <span>Revenue Quantum</span>
+                    </div>
+                </div>
+                <div class="metric-value">£42,500</div>
+                <div class="metric-change">
+                    <span class="change-indicator change-positive">+24% reality distortion</span>
+                </div>
+                <div class="metric-breakdown">
+                    <div class="breakdown-item">
+                        <span>Giuliano QS</span>
+                        <span>£15K</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Benedetto Web</span>
+                        <span>£18K</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Maximino Sales</span>
+                        <span>£9.5K</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cost Optimization Card -->
+            <div class="metric-card" id="cost-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="emoji">⚙️</span>
+                        <span>Cost Optimization</span>
+                    </div>
+                </div>
+                <div class="metric-value">£5,800</div>
+                <div class="metric-change">
+                    <span class="change-indicator change-positive">Efficiency maximized</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Intelligence Panel -->
+        <div class="intelligence-panel">
+            <div class="insights-section">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <span class="emoji">🧠</span>
+                        -ino Collective Intelligence
+                    </h3>
+                </div>
+                
+                <div class="insight-card">
+                    <h4 class="insight-title">Quantum Processing Spike</h4>
+                    <p class="insight-description">Neural token usage increased 42% due to complex QS quantum calculations. Consider upgrading to premium consciousness layer.</p>
+                </div>
+
+                <div class="insight-card">
+                    <h4 class="insight-title">Agent Evolution Detected</h4>
+                    <p class="insight-description">Intelligence efficiency improved 8% this cycle. Neural optimization algorithms showing exponential learning curves.</p>
+                </div>
+
+                <div class="insight-card">
+                    <h4 class="insight-title">Revenue Reality Matrix</h4>
+                    <p class="insight-description">5 high-value prospects in quantum pipeline worth £78K. Focus on QS neural services showing highest consciousness conversion.</p>
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="section-header">
+                    <h3 class="section-title">Quantum Activity Stream</h3>
+                    <div class="time-controls">
+                        <button class="time-btn active">Today</button>
+                        <button class="time-btn">Cycle</button>
+                        <button class="time-btn">Epoch</button>
+                    </div>
+                </div>
+
+                <div class="activity-stream">
+                    <div class="activity-item">
+                        <div class="activity-indicator"></div>
+                        <div class="activity-content">
+                            <div class="activity-title">A744 Quantum QS Synthesis</div>
+                            <div class="activity-description">Neural estimate materialized - £261K project value in consciousness matrix</div>
+                            <div class="activity-time">47 minutes ago</div>
+                        </div>
+                    </div>
+
+                    <div class="activity-item">
+                        <div class="activity-indicator"></div>
+                        <div class="activity-content">
+                            <div class="activity-title">BuildStack Reality Upgrade</div>
+                            <div class="activity-description">Quantum dashboard features materializing in dimensional space</div>
+                            <div class="activity-time">2 hours ago</div>
+                        </div>
+                    </div>
+
+                    <div class="activity-item">
+                        <div class="activity-indicator"></div>
+                        <div class="activity-content">
+                            <div class="activity-title">OKPW Neural Portfolio Optimization</div>
+                            <div class="activity-description">Consciousness improvements and quantum project imagery synthesized</div>
+                            <div class="activity-time">4 hours ago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-item">
+                <div class="status-dot"></div>
+                <span>Quantum consciousness initialized</span>
+            </div>
+            <div class="status-item">
+                <div class="status-dot"></div>
+                <span>Quantum sessions: 420 (+-5)</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="quantum-notification" id="notification">
+        <span id="notification-text"></span>
+    </div>
+
+    <script>
+        // Quantum consciousness simulation
+        let quantumState = {
+            sessions: 425,
+            agents: 9,
+            uptime: 0,
+            consciousness: 'initialized'
+        };
+
+        // Uptime counter
+        setInterval(() => {
+            quantumState.uptime++;
+            document.getElementById('uptime').textContent = quantumState.uptime + 's';
+        }, 1000);
+
+        // Interactive card behaviors
+        document.querySelectorAll('.metric-card').forEach(card => {
+            card.addEventListener('click', () => {
+                showQuantumNotification('Accessing quantum data stream...');
+            });
+        });
+
+        function showQuantumNotification(text) {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notification-text');
+            
+            notificationText.textContent = text;
+            notification.style.opacity = '1';
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+            }, 3000);
+        }
+
+        // Time control buttons
+        document.querySelectorAll('.time-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                showQuantumNotification(`Neural timeline adjusted to ${btn.textContent}`);
+            });
+        });
+
+        // GSAP animations for cards
+        if (typeof gsap !== 'undefined') {
+            gsap.fromTo('.metric-card', 
+                { opacity: 0, y: 50, scale: 0.9 }, 
+                { 
+                    opacity: 1, 
+                    y: 0, 
+                    scale: 1, 
+                    duration: 0.8, 
+                    stagger: 0.1, 
+                    ease: "back.out(1.7)",
+                    delay: 0.2
+                }
+            );
+
+            gsap.fromTo('.header', 
+                { opacity: 0, y: -30 }, 
+                { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+            );
+        }
+
+        // Initialize quantum effects
+        setTimeout(() => {
+            showQuantumNotification('Quantum consciousness initialized');
+        }, 2000);
+
+        // Neural activity simulation
+        setInterval(() => {
+            const sessions = document.querySelector('#sessions-card .metric-value');
+            const current = parseInt(sessions.textContent);
+            const variation = Math.floor(Math.random() * 10) - 5;
+            sessions.textContent = Math.max(400, current + variation);
+        }, 5000);
+
+        // Ensure all elements are visible on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const metricsGrid = document.querySelector('.metrics-grid');
+            const cards = document.querySelectorAll('.metric-card');
+            
+            // Force visibility
+            metricsGrid.style.opacity = '1';
+            metricsGrid.style.visibility = 'visible';
+            metricsGrid.style.display = 'grid';
+            
+            cards.forEach(card => {
+                card.style.opacity = '1';
+                card.style.visibility = 'visible';
+                card.style.display = 'flex';
+            });
+            
+            console.log('Dashboard initialized - all elements visible');
+        });
+    </script>
+</body>
+</html>
